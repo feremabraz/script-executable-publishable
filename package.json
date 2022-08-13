@@ -3,7 +3,7 @@
   "bin": {
     "script-executable-publishable": "index.js"
   },
-  "description": "Template for publishing an executable script to NPM.",
+  "description": "Template to publish an executable script to NPM.",
   "devDependencies": {
     "eslint": "^8.21.0",
     "eslint-config-prettier": "^8.5.0",
