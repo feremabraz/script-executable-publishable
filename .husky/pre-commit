@@ -1,6 +1,4 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 pnpm check:lint
 pnpm check:format
 pnpm test
