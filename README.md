@@ -8,11 +8,46 @@ If you are wondering whether or not you need a bundler for your purposes, you ca
 
 ## <u>How to use</u>
 
-The procedure is fairly simple.
+The procedure is straightforward:
 
-1.  [Use this project as a template](https://github.com/gamekaiju/script-executable-publishable/generate).
-2.  Refill every occurrence of 'script-executable-publishable' inside package.json with your own project name. Replace 'description', 'keys' and 'author' with your own values and clear the readme: `cat /dev/null > README.md`. Update the license.
-3.  Copy the example npmrc file as '.npmrc': `cp .npmrc.example .npmrc` and replace the placeholder with a [Personal Access Token](https://github.com/settings/tokens) created with 'write:packages' as scope.
-4.  Do `pnpm install`. If you don't have pnpm yet, [follow this guide](https://pnpm.io/installation).
-5.  To test if your script works as intended before publishing, use [npm as explained here](https://hirok.io/posts/avoid-npm-link#tl-dr) to avoid headaches.
-6.  When you're ready to publish, do `pnpm publish`.
+1. [Use this project as a template](https://github.com/gamekaiju/script-executable-publishable/generate).
+2. Replace all occurrences of 'script-executable-publishable' in `package.json` with your project name. Update the description, author, and license fields as needed.
+3. **Authentication & Registry:**
+   - If you intend to publish to the **public npm registry** (npmjs.com), simply run:
+     ```sh
+     pnpm login
+     ```
+     You do **not** need a `.npmrc` file or a GitHub token for public npm.
+   - If you intend to publish to **GitHub Packages** (npm.pkg.github.com), you need a `.npmrc` file with an auth token. You can use the provided `.npmrc.example`:
+     ```sh
+     cp .npmrc.example .npmrc
+     # Then edit .npmrc and add your GitHub Personal Access Token (with write:packages scope)
+     ```
+4. Install dependencies:
+   ```sh
+   pnpm install
+   ```
+   If you don’t have pnpm, [follow this guide](https://pnpm.io/installation).
+5. Lint and format your code (recommended):
+   ```sh
+   pnpm lint
+   pnpm format
+   ```
+   > This project uses [Biome](https://biomejs.dev/) for linting and formatting.
+6. (Recommended) Test your script locally before publishing. You can use [`pnpm link --global`](https://pnpm.io/cli/link) or [these npm tips](https://hirok.io/posts/avoid-npm-link#tl-dr).
+7. When you're ready to publish to npm, run:
+   ```sh
+   pnpm publish --access public
+   ```
+
+## <u>Public vs Private Packages</u>
+
+- For **public packages on npmjs.com**, use:
+  ```sh
+  pnpm publish --access public
+  ```
+- For **private packages on npmjs.com**, use a **scoped package name** (e.g., `@yourname/package`) and publish with:
+  ```sh
+  pnpm publish --access restricted
+  ```
+- For **private packages on GitHub Packages**, packages are private by default. Just publish as usual after configuring `.npmrc`.
